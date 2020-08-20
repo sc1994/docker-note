@@ -1,0 +1,15 @@
+# kodi:
+#   image: linuxserver/kodi-headless
+#   restart: always
+#   ports:
+#     - 8080:8080
+#     - 9090:9090
+#     - 9777:9777/udp
+#   environment:
+#     - PGID=suncheng
+#     - PUID=suncheng
+#     - TZ=China
+#   volumes:
+#     - E:\Kodi:/config/.kodi
+
+# 安装文件版本的更好用  

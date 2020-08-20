@@ -1,0 +1,11 @@
+seafile:
+  image: seafileltd/seafile:latest
+  restart: always
+  ports:
+    - 1122:80
+  environment:
+    - SEAFILE_SERVER_HOSTNAME=127.0.0.1
+    - SEAFILE_ADMIN_EMAIL=sunchengsuncheng@gmail.com
+    - SEAFILE_ADMIN_PASSWORD=sun940622 
+  volumes:
+    - E:\Seafile:/shared

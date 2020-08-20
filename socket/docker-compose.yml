@@ -1,0 +1,6 @@
+gobang:
+  image: daocloud.io/sc1994/socket:latest
+  privileged: false
+  restart: always
+  ports:
+  - 5001:5001
