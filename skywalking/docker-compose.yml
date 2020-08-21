@@ -1,4 +1,4 @@
-    
+
 # Licensed to the Apache Software Foundation (ASF) under one
 # or more contributor license agreements.  See the NOTICE file
 # distributed with this work for additional information
@@ -15,43 +15,50 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-version: '3.3'
+version: '3.8'
 services:
-  elasticsearch1:
-    image: elasticsearch:6.8.1
-    container_name: elasticsearch1
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
+    container_name: elasticsearch
     restart: always
     ports:
       - 9200:9200
-      - 9300:9300
+    healthcheck:
+      test: ["CMD-SHELL", "curl --silent --fail localhost:9200/_cluster/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
     environment:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - thread_pool.write.queue_size=2048
-    sysctls:
-      - net.core.somaxconn=2048
     ulimits:
       memlock:
         soft: -1
         hard: -1
   oap:
-    image: apache/skywalking-oap-server:6.2.0
+    image: apache/skywalking-oap-server:8.1.0-es7
     container_name: oap
     depends_on:
-      - elasticsearch1
+      - elasticsearch
     links:
-      - elasticsearch1
+      - elasticsearch
     restart: always
     ports:
       - 11800:11800
       - 12800:12800
+    healthcheck:
+      test: ["CMD-SHELL", "/skywalking/bin/swctl"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
     environment:
-      - SW_STORAGE=elasticsearch
-      - SW_STORAGE_ES_CLUSTER_NODES=elasticsearch1:9200
-      - TZ=Asia/Shanghai
+      SW_STORAGE: elasticsearch7
+      SW_STORAGE_ES_CLUSTER_NODES: elasticsearch:9200
   ui:
-    image: apache/skywalking-ui:6.2.0
+    image: apache/skywalking-ui:8.1.0
     container_name: ui
     depends_on:
       - oap
