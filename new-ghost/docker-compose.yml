@@ -1,8 +1,0 @@
-ghost:
-  image: ghost:latest
-  privileged: false
-  restart: always
-  ports:
-  - 2368:2368
-  volumes:
-  - /ghostHD:/data
