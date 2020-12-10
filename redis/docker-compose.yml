@@ -1,10 +1,10 @@
 redis:
-  image: daocloud.io/library/redis:latest
-  command: redis-server --requirepass 1qaz2wsx3edc 
-  privileged: false
-  restart: always
-  ports:
-    - 6379:6379
-  volumes:
-    - /tmp/data:/data
-
+   container_name: redis
+   image: redis
+   ports:
+     - "6379:6379"
+   volumes:
+     - ../data/redis:/data
+   entrypoint: 
+    redis-server --appendonly yes --requirepass 1qaz2wsx3edc 
+   restart: always

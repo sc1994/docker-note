@@ -1,9 +1,9 @@
 mysql:
-  image: daocloud.io/library/mysql:latest
-  privileged: false
+  image: daocloud.io/library/mysql:5.7
   restart: always
   ports:
-  - 3307:3306
-  - 33070:33060
+  - 3306:3306
+  - 33060:33060
   environment:
+  - MYSQL_USER=root
   - MYSQL_ROOT_PASSWORD=1qaz2wsx3edc
