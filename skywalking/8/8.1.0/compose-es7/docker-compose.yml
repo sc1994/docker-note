@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-version: '3.8'
+version: '3.3'
 services:
   elasticsearch-skyapm:
     image: daocloud.io/library/elasticsearch:7.5.0
@@ -27,7 +27,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 40s
     environment:
       - discovery.type=single-node
       - bootstrap.memory_lock=true
@@ -38,7 +37,7 @@ services:
         soft: -1
         hard: -1
   oap:
-    image: apache/skywalking-oap-server:8.1.0-es7
+    image: index.docker.io/apache/skywalking-oap-server:8.1.0-es7
     container_name: oap
     depends_on:
       - elasticsearch-skyapm
@@ -53,13 +52,12 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 40s
     environment:
       SW_STORAGE: elasticsearch7
       SW_STORAGE_ES_CLUSTER_NODES: elasticsearch-skyapm:9200
       TZ: Asia/Shanghai
   ui:
-    image: apache/skywalking-ui:8.1.0
+    image: index.docker.io/apache/skywalking-ui:8.1.0
     container_name: ui
     depends_on:
       - oap
